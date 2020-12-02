@@ -16,7 +16,8 @@ class FCOS(nn.Module):
         if config is None:
             config=DefaultConfig
         self.backbone=resnet101(pretrained=True,if_include_top=False)
-        self.fpn=FPN(config.fpn_out_channels,use_p5=config.use_p5)
+        #self.fpn=FPN(config.fpn_out_channels,use_p5=config.use_p5)
+        self.mlfpn=build_net(config=model['m2det_config'])
         self.head=ClsCntRegHead(config.fpn_out_channels,config.class_num,
                                 config.use_GN_head,config.cnt_on_reg,config.prior)
         self.config=config
