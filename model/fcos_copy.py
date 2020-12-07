@@ -1,5 +1,4 @@
 from .head import ClsCntRegHead
-from .fpn_neck import FPN
 from .backbone.resnet import resnet101
 import torch.nn as nn
 from .loss import GenTargets,LOSS,coords_fmap2orig
@@ -8,7 +7,6 @@ from .config import DefaultConfig
 from .mlfpn import M2Det, build_net
 from .cc import model 
 
-
 class FCOS(nn.Module):
     
     def __init__(self,config=None):
@@ -16,7 +14,6 @@ class FCOS(nn.Module):
         if config is None:
             config=DefaultConfig
         self.backbone=resnet101(pretrained=True,if_include_top=False)
-        #self.fpn=FPN(config.fpn_out_channels,use_p5=config.use_p5)
         self.mlfpn=build_net(config=model['m2det_config'])
         self.head=ClsCntRegHead(config.fpn_out_channels,config.class_num,
                                 config.use_GN_head,config.cnt_on_reg,config.prior)
