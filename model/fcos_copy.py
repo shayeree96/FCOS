@@ -49,28 +49,6 @@ class FCOS(nn.Module):
                 size = 320, # Only 320, 512, 704 and 800 are supported
                 config = model['m2det_config'])
         all_P=m2det(C4,C5)
-        '''
-        C3 : torch.Size([2, 512, 104, 136])
-        C4 : torch.Size([2, 1024, 52, 68])
-        C5  : torch.Size([2, 2048, 26, 34])
-
-        Original shapes required:
-        all_P torch.Size([2, 256, 104, 136])
-        all_P torch.Size([2, 256, 52, 68])
-        all_P torch.Size([2, 256, 26, 34])
-        all_P torch.Size([2, 256, 13, 17])
-        all_P torch.Size([2, 256, 7, 9])
-
-        Our outputs:
-        all_P torch.Size([2048, 52, 68])
-        all_P torch.Size([2048, 52, 68])
-        
-        
-        
-        
-        '''
-        
-        #all_P=self.fpn([C3,C4,C5])
         cls_logits,cnt_logits,reg_preds=self.head(all_P)
         return [cls_logits,cnt_logits,reg_preds]
 
@@ -277,9 +255,3 @@ class FCOSDetector(nn.Module):
             scores,classes,boxes=self.detection_head(out)
             boxes=self.clip_boxes(batch_imgs,boxes)
             return scores,classes,boxes
-
-
-
-    
-
-
