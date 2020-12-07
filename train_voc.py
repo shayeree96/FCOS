@@ -1,5 +1,4 @@
 import pdb
-from model.fcos_copy import FCOSDetector
 import torch
 from dataset.VOC_dataset import VOCDataset
 import math, time
